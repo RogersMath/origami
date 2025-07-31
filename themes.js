@@ -61,6 +61,9 @@ export class ThemeManager {
             document.title = theme.meta.title;
         }
 
+        // Initialize character entities
+        this.initializeCharacters(theme);
+
         // Update entity representations
         if (theme.entities) {
             this.cacheEntityConfig = theme.entities;
@@ -68,6 +71,86 @@ export class ThemeManager {
 
         // Apply theme-specific CSS classes
         document.body.className = `theme-${theme.meta?.id || 'default'}`;
+    }
+
+    /**
+     * Initialize character entities (narrator, boss) from theme config
+     * @param {Object} theme - Theme configuration
+     */
+    initializeCharacters(theme) {
+        if (!theme.entities) return;
+
+        // Initialize narrator
+        if (theme.entities.narrator) {
+            this.initializeCharacter('narrator', theme.entities.narrator);
+        }
+
+        // Initialize boss
+        if (theme.entities.boss) {
+            this.initializeCharacter('boss', theme.entities.boss);
+        }
+    }
+
+    /**
+     * Initialize a character with theme-specific parts
+     * @param {string} characterType - 'narrator' or 'boss'
+     * @param {Object} config - Character configuration
+     */
+    initializeCharacter(characterType, config) {
+        if (!config.parts) return;
+
+        const faceElement = document.getElementById(`${characterType}-face`);
+        const bodyElement = document.getElementById(`${characterType}-body`);
+        const accessoryElement = document.getElementById(`${characterType}-accessory`);
+
+        if (faceElement && config.parts.face) {
+            faceElement.textContent = config.parts.face;
+        }
+        if (bodyElement && config.parts.body) {
+            bodyElement.textContent = config.parts.body;
+        }
+        if (accessoryElement && config.parts.accessory) {
+            accessoryElement.textContent = config.parts.accessory;
+        }
+
+        // Apply container styling
+        if (config.container && config.style) {
+            const container = document.getElementById(config.container);
+            if (container && config.style.filter) {
+                container.style.filter = config.style.filter;
+            }
+        }
+    }
+
+    /**
+     * Transform a character to a different state (for narratives)
+     * @param {string} characterType - 'narrator' or 'boss'
+     * @param {string} transformState - State to transform to
+     */
+    transformCharacter(characterType, transformState) {
+        const entityConfig = this.cacheEntityConfig?.[characterType];
+        if (!entityConfig?.transformations?.[transformState]) return;
+
+        const transformation = entityConfig.transformations[transformState];
+        const faceElement = document.getElementById(`${characterType}-face`);
+        const bodyElement = document.getElementById(`${characterType}-body`);
+        const accessoryElement = document.getElementById(`${characterType}-accessory`);
+
+        if (faceElement && transformation.face) {
+            faceElement.style.transition = 'none';
+            faceElement.textContent = transformation.face;
+            void faceElement.offsetWidth; // Force reflow
+        }
+        if (bodyElement && transformation.body) {
+            bodyElement.style.transition = 'none';
+            bodyElement.textContent = transformation.body;
+            void bodyElement.offsetWidth;
+        }
+        if (accessoryElement && transformation.accessory) {
+            accessoryElement.style.transition = 'none';
+            accessoryElement.textContent = transformation.accessory;
+            void accessoryElement.offsetWidth;
+        }
     }
 
     /**
