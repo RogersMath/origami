@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Origami Engine Demo</title>
+    <link rel="stylesheet" href="src/style.css">
+    <meta name="description" content="Origami Engine - Where 2D code folds into 3D experiences">
+</head>
+<body>
+    <!-- Game Structure -->
+    <div id="game-container">
+        <div id="game-area">
+            <canvas id="fireCanvas"></canvas>
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- Character Containers - Content populated by themes -->
+            <div id="narrator-container">
+                <span id="narrator-face" class="emoji"></span>
+                <span id="narrator-body" class="emoji"></span>
+                <span id="narrator-accessory" class="emoji"></span>
+            </div>
+            
+            <!-- Voiceover Text Display -->
+            <div id="voiceover-text"></div>
+            
+            <!-- Boss Container -->
+            <div id="boss-container">
+                <span id="boss-face" class="emoji"></span>
+                <span id="boss-body" class="emoji"></span>
+                <span id="boss-accessory" class="emoji"></span>
+            </div>
+            
+            <!-- Game UI Overlay -->
+            <div id="ui-overlay">
+                <div id="game-header">
+                    <div id="score-display">Score: 0</div>
+                    <div id="level-display">Level: 1</div>
+                    <div id="settings-btn">⚙️</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom UI for Math Problems and Input -->
+        <div id="bottom-ui">
+            <div id="problem-display"></div>
+            <div id="keypad">
+                <button class="keypad-btn" data-value="7">7</button>
+                <button class="keypad-btn" data-value="8">8</button>
+                <button class="keypad-btn" data-value="9">9</button>
+                <button class="keypad-btn" data-value="4">4</button>
+                <button class="keypad-btn" data-value="5">5</button>
+                <button class="keypad-btn" data-value="6">6</button>
+                <button class="keypad-btn" data-value="1">1</button>
+                <button class="keypad-btn" data-value="2">2</button>
+                <button class="keypad-btn" data-value="3">3</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Screens -->
+    <!-- Start Screen Modal -->
+    <div id="startScreen" class="modal">
+        <h1 class="modal-title">Origami Engine</h1>
+        <p>Welcome to Origami Engine - where 2D code folds into infinite 3D experiences.</p>
+        <p>Use keyboard (1-9) or mouse to answer math problems and defend against approaching enemies!</p>
+        <div>
+            <button id="start-btn" class="modal-btn">START GAME</button>
+            <button id="skip-btn" class="modal-btn secondary">SKIP INTRO</button>
+        </div>
+    </div>
+
+    <!-- Pause Screen Modal -->
+    <div id="pauseScreen" class="modal">
+        <h1 class="modal-title">Paused</h1>
+        <p>The game is paused. Adjust settings or resume when ready.</p>
+        <div class="settings-group">
+            <label for="volumeSlider">Volume:</label>
+            <input type="range" id="volumeSlider" min="0" max="100" value="30">
+        </div>
+        <button id="resume-btn" class="modal-btn">RESUME</button>
+    </div>
+
+    <!-- Game Over Screen Modal -->
+    <div id="gameOverScreen" class="modal">
+        <h1 class="modal-title">You Have Perished</h1>
+        <p>Your mathematical journey has ended. Final Score: <span id="finalScore">
