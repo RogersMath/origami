@@ -76,15 +76,34 @@ export const spaceTheme = {
             }
         ],
 
-        boss: {
-            emoji: '🚀',
-            container: 'boss-container',
+        narrator: {
+            container: 'narrator-container',
             style: {
                 filter: 'drop-shadow(0 0 25px rgba(0, 191, 255, 0.8))'
             },
             parts: {
                 face: '🤖',
                 body: '🚀', 
+                accessory: '📡'
+            },
+            transformations: {
+                alert: {
+                    face: '🚨',
+                    body: '🚀',
+                    accessory: '⚡'
+                }
+            }
+        },
+
+        boss: {
+            emoji: '🛸',
+            container: 'boss-container',
+            style: {
+                filter: 'drop-shadow(0 0 25px rgba(0, 191, 255, 0.8))'
+            },
+            parts: {
+                face: '👾',
+                body: '🛸', 
                 accessory: '⚡'
             }
         },
