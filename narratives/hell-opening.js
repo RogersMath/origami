@@ -40,10 +40,7 @@ export const hellOpeningNarrative = {
             shakeDelay: 0,
             shakeRepeats: 3,
             transformDelay: 500,
-            transformations: {
-                'narratorFace': '😠',
-                'narratorThumbs': '👎'
-            },
+            transformState: 'angry', // Use theme-defined transformation
             onStart: (game) => {
                 // Hide dialogue
                 game.elements.voiceoverText.style.opacity = 0;
