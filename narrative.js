@@ -1,5 +1,7 @@
 // narrative.js - Separate narrative system for opening cinematics and story elements
 
+import { themeManager } from './themes.js';
+
 export class NarrativeManager {
     constructor(game) {
         this.game = game;
@@ -118,7 +120,6 @@ export class NarrativeManager {
             setTimeout(() => {
                 if (phase.transformState) {
                     // Use theme system for transformation
-                    const { themeManager } = require('./themes.js');
                     themeManager.transformCharacter(phase.character, phase.transformState);
                 } else if (phase.transformations) {
                     // Legacy direct transformations (fallback)
