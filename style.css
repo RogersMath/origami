@@ -1,0 +1,316 @@
+/* style.css - Theme-driven CSS using CSS custom properties */
+
+/* Base CSS custom properties - will be overridden by theme system */
+:root {
+    --theme-primary: #ff4500;
+    --theme-secondary: #ff8c00;
+    --theme-accent: #ff0000;
+    --theme-background: #000000;
+    --theme-surface: #111111;
+    --theme-text: #cccccc;
+    --theme-textEmphasis: #ff8c00;
+    --theme-success: #00ff00;
+    --theme-error: #ff6666;
+    --theme-warning: #ffff00;
+    
+    --theme-font-primary: 'Times New Roman', serif;
+    --theme-font-secondary: monospace;
+    --theme-font-display: 'Times New Roman', serif;
+    
+    --theme-spacing-xs: 5px;
+    --theme-spacing-sm: 10px;
+    --theme-spacing-md: 15px;
+    --theme-spacing-lg: 20px;
+    --theme-spacing-xl: 30px;
+    
+    --theme-shadowColor: #ff0000;
+    --theme-shadowBlur: 15px;
+    --theme-glowColor: #ff4500;
+    --theme-textShadow: 2px 2px 8px #ff0000;
+    --theme-borderRadius: 10px;
+    --theme-transitionDuration: 0.2s;
+}
+
+/* Base reset and layout */
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    user-select: none; 
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    height: 100%; 
+    overflow: hidden; 
+    background-color: var(--theme-background);
+    font-family: var(--theme-font-primary); 
+    color: var(--theme-text);
+}
+
+#game-container {
+    position: relative; 
+    width: 100%; 
+    height: 100%;
+    display: flex; 
+    flex-direction: column; 
+    background-color: var(--theme-background);
+}
+
+#game-area {
+    position: relative; 
+    width: 100%; 
+    flex: 1; 
+    min-height: 40%;
+}
+
+#fireCanvas, #gameCanvas {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    display: block;
+}
+
+#fireCanvas { 
+    z-index: 1; 
+    opacity: 0; 
+    transition: opacity 2s ease-in; 
+}
+
+#gameCanvas { 
+    z-index: 2; 
+    cursor: none; 
+}
+
+#ui-overlay, #bottom-ui { 
+    visibility: hidden; 
+}
+
+/* Character and narrative containers */
+#narrator-container, #boss-container {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 200px; 
+    height: 200px;
+    transform: translate(-50%, -50%); 
+    transform-origin: center;
+    will-change: transform, opacity;
+    display: none; 
+}
+
+#narrator-container { 
+    filter: drop-shadow(0 0 20px var(--theme-glowColor)); 
+    z-index: 60;
+}
+
+#boss-container {
+    filter: drop-shadow(0 0 var(--theme-shadowBlur) var(--theme-shadowColor)); 
+    z-index: 50;
+}
+
+#voiceover-text {
+    position: absolute; 
+    bottom: 100px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    text-align: center; 
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+    text-shadow: var(--theme-textShadow); 
+    opacity: 0; 
+    max-width: 85%;
+    line-height: 1.5; 
+    z-index: 60;
+    color: var(--theme-textEmphasis);
+}
+
+.emoji { 
+    position: absolute; 
+    user-select: none; 
+}
+
+#narrator-face, #boss-face { 
+    font-size: 100px; 
+    top: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 3; 
+}
+
+#narrator-body, #boss-body { 
+    font-size: 120px; 
+    top: 40px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1; 
+}
+
+#narrator-thumbs { 
+    font-size: 50px; 
+    top: 90px; 
+    left: 130px; 
+    z-index: 2; 
+    transition: none; 
+}
+
+#boss-mug { 
+    font-size: 50px; 
+    top: 90px; 
+    left: 110px; 
+    z-index: 2; 
+}
+
+/* Game UI */
+#ui-overlay {
+    z-index: 3; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    padding: var(--theme-spacing-sm); 
+    pointer-events: none; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+}
+
+#game-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#score-display, #level-display {
+    background: rgba(0,0,0,0.6); 
+    padding: var(--theme-spacing-xs) var(--theme-spacing-md); 
+    border: 1px solid var(--theme-primary);
+    border-radius: var(--theme-spacing-xs); 
+    font-size: 1.5em; 
+    text-shadow: var(--theme-textShadow); 
+    font-family: var(--theme-font-secondary);
+    color: var(--theme-textEmphasis);
+}
+
+#settings-btn {
+    font-size: 2.5em; 
+    cursor: pointer; 
+    pointer-events: all;
+    background: rgba(0,0,0,0.6); 
+    border: 1px solid var(--theme-primary); 
+    border-radius: 50%;
+    width: 50px; 
+    height: 50px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: var(--theme-primary);
+    transition: transform var(--theme-transitionDuration);
+}
+
+#settings-btn:hover {
+    transform: scale(1.1);
+}
+
+#bottom-ui { 
+    background: var(--theme-surface); 
+    border-top: 3px solid var(--theme-primary); 
+    padding: var(--theme-spacing-sm); 
+    z-index: 10; 
+}
+
+#problem-display {
+    background: rgba(0,0,0,0.8); 
+    color: var(--theme-textEmphasis); 
+    padding: var(--theme-spacing-md); 
+    border-radius: var(--theme-borderRadius);
+    border: 2px solid var(--theme-accent); 
+    box-shadow: 0 0 20px var(--theme-glowColor);
+    font-size: clamp(1.5rem, 6vw, 2.5rem); 
+    text-shadow: var(--theme-textShadow);
+    font-family: var(--theme-font-secondary); 
+    text-align: center; 
+    margin-bottom: var(--theme-spacing-sm);
+}
+
+#keypad { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: var(--theme-spacing-sm); 
+}
+
+.keypad-btn {
+    background: linear-gradient(145deg, #333, #111); 
+    border: 2px solid var(--theme-primary);
+    border-radius: var(--theme-borderRadius); 
+    color: var(--theme-textEmphasis); 
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+    font-family: var(--theme-font-secondary); 
+    cursor: pointer; 
+    transition: all 0.1s ease;
+    padding: var(--theme-spacing-md) 0; 
+    text-shadow: var(--theme-textShadow); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    pointer-events: all;
+}
+
+.keypad-btn:active {
+    transform: translateY(2px) scale(0.98); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    background: linear-gradient(145deg, var(--theme-primary), var(--theme-secondary)); 
+    color: var(--theme-background);
+}
+
+.keypad-btn.correct { 
+    background: linear-gradient(145deg, var(--theme-success), #90EE90); 
+    color: var(--theme-background); 
+}
+
+.keypad-btn.incorrect { 
+    background: linear-gradient(145deg, var(--theme-error), #ff6666); 
+    color: var(--theme-text); 
+}
+
+/* Modal styles */
+.modal {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.9); 
+    z-index: 100; 
+    display: none;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center; 
+    padding: var(--theme-spacing-lg); 
+    font-size: 1.2rem;
+}
+
+#startScreen { 
+    display: flex; 
+}
+
+.modal-title {
+    font-size: clamp(2.5rem, 10vw, 4rem); 
+    color: var(--theme-primary);
+    text-shadow: var(--theme-textShadow); 
+    margin-bottom: var(--theme-spacing-lg);
+    font-family: var(--theme-font-display);
+}
+
+.modal p { 
+    max-width: 600px; 
+    line-height: 1.6; 
+    margin-bottom: var(--theme-spacing-md); 
+    color: var(--theme-text); 
+}
+
+.modal-btn {
+    background: var(--theme-primary); 
+    border: 2px solid var(--theme-secondary); 
+    color
