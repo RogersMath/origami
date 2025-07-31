@@ -114,15 +114,19 @@ export class NarrativeManager {
             character.classList.add('transforming');
             character.style.animation = `shake 0.5s ease-in-out ${phase.shakeRepeats || 3}`;
             
-            // Apply transformations
+            // Apply theme-based transformations
             setTimeout(() => {
-                if (phase.transformations) {
+                if (phase.transformState) {
+                    // Use theme system for transformation
+                    const { themeManager } = require('./themes.js');
+                    themeManager.transformCharacter(phase.character, phase.transformState);
+                } else if (phase.transformations) {
+                    // Legacy direct transformations (fallback)
                     Object.entries(phase.transformations).forEach(([elementId, newContent]) => {
                         const element = this.game.elements[elementId];
                         if (element) {
                             element.style.transition = 'none';
                             element.textContent = newContent;
-                            // Force reflow
                             void element.offsetWidth;
                         }
                     });
