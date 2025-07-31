@@ -83,5 +83,15 @@
 
     <!-- Game Over Screen Modal -->
     <div id="gameOverScreen" class="modal">
-        <h1 class="modal-title">You Have Perished</h1>
-        <p>Your mathematical journey has ended. Final Score: <span id="finalScore">
+        <h1 class="modal-title">Game Over</h1>
+        <p>Your mathematical journey has ended. Final Score: <span id="finalScore">0</span></p>
+        <button id="reset-btn" class="modal-btn">TRY AGAIN</button>
+    </div>
+
+    <!-- Load the main game script as a module -->
+    <script src="src/main.js" type="module"></script>
+    
+    <!-- Optional: Load theme switcher for development -->
+    <script src="src/theme-switcher-demo.js" type="module"></script>
+</body>
+</html>
