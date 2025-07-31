@@ -76,6 +76,26 @@ export const hellTheme = {
             }
         ],
 
+        narrator: {
+            container: 'narrator-container',
+            style: {
+                filter: 'drop-shadow(0 0 20px rgba(255, 140, 0, 0.8))'
+            },
+            parts: {
+                face: '😉',
+                body: '👔', 
+                accessory: '👍'
+            },
+            // Transformation states for narrative progression
+            transformations: {
+                angry: {
+                    face: '😠',
+                    body: '👔',
+                    accessory: '👎'
+                }
+            }
+        },
+
         boss: {
             emoji: '👿',
             container: 'boss-container',
